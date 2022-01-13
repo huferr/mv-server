@@ -2,9 +2,9 @@
   "name": "mv-server",
   "version": "1.0.0",
   "description": "",
-  "main": "src/server.ts",
+  "main": "src/server.js",
   "scripts": {
-    "start": "nodemon src/server.ts"
+    "start": "nodemon src/server.js"
   },
   "author": "",
   "license": "ISC",
