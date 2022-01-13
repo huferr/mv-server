@@ -1,2 +1,2 @@
-# math_viewer_backend
-The math viewer Backend
+# math_viewer_server
+The math viewer Server
