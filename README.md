@@ -1,2 +1,8 @@
 # math_viewer_server
-The math viewer Server
+The Math viewer Server
+
+Made with: 
+
+- NodeJS;
+- ExpressJS;
+- GraphQL.
