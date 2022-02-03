@@ -1,0 +1,10 @@
+type User {
+    id: ID!
+    nickname: String!
+    mathscore: Int!
+  }
+
+  type Query {
+    users: [User!]!
+    user(id: ID!): User!
+  }

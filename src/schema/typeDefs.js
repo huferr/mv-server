@@ -1,16 +1,8 @@
 const { gql } = require("apollo-server");
+const { mergeTypeDefs } = require('@graphql-tools/merge');
+const { loadFilesSync } = require('@graphql-tools/load-files');
+const path = require('path');
 
-const typeDefs = gql`
-  type User {
-    id: ID!
-    nickname: String!
-    mathscore: Int!
-  }
-
-  type Query {
-    users: [User!]!
-    user(id: ID!): User!
-  }
-`;
+const typeDefs = mergeTypeDefs(loadFilesSync(path.resolve('./**/*.gql')))
 
 module.exports = { typeDefs };
