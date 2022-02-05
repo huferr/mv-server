@@ -4,5 +4,5 @@ The Math viewer Server
 Made with: 
 
 - NodeJS;
-- ExpressJS;
+- Apollo Server;
 - GraphQL.
