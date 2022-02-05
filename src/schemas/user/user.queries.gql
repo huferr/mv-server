@@ -1,11 +1,17 @@
+type UserHomeworks {
+  done: Int
+  undone: Int
+}
+
 type User {
   id: ID
   nickname: String
   mathscore: Int
   email: String
+  homeworks: UserHomeworks
 }
 
 type Query {
   users: [User]
-  user(id: ID!): User!
+  user(id: ID, nickname: String): User!
 }
