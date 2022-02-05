@@ -13,6 +13,11 @@ const UserList = [
       id: 3,
       nickname: 'what',
       mathscore: 30,
+    },
+    {
+      id: 4,
+      nickname: 'jao e o pe de taioba',
+      mathscore: 500,
     }
 ]
 
