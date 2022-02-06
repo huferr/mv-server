@@ -41,4 +41,27 @@ const UserList = [
     }
 ]
 
+const homeworksList = [
+  {
+    id: 1,
+    subject: 'geometry',
+    description: 'blablablablabla',
+  },
+  {
+    id: 2,
+    subject: 'algebra',
+    description: 'blablablablabla',
+  },
+  {
+    id: 3,
+    subject: 'seila',
+    description: 'blablablablabla',
+  },
+  {
+    id: 4,
+    subject: 'naosei',
+    description: 'blablablablabla',
+  }
+]
+
 module.exports = { UserList };
