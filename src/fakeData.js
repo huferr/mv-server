@@ -41,7 +41,7 @@ const UserList = [
     }
 ]
 
-const homeworksList = [
+const HomeworksList = [
   {
     id: 1,
     subject: 'geometry',
@@ -64,4 +64,4 @@ const homeworksList = [
   }
 ]
 
-module.exports = { UserList, homeworksList };
+module.exports = { UserList, HomeworksList };

@@ -5,5 +5,6 @@ type Homeworks {
 } 
 
 type Query {
-  homeworks(id: ID, subject: String): [Homeworks]
+  getAllHomeworks: [Homeworks]
+  getHomework(id: ID, subject: String): Homeworks!
 }
