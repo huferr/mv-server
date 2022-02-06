@@ -64,4 +64,4 @@ const homeworksList = [
   }
 ]
 
-module.exports = { UserList };
+module.exports = { UserList, homeworksList };

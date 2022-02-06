@@ -1,0 +1,9 @@
+type Homeworks {
+  id: ID
+  subject: String
+  description: String
+} 
+
+type Query {
+  homeworks(id: ID, subject: String): [Homeworks]
+}
