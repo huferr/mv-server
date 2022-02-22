@@ -1,14 +1,9 @@
-type UserHomeworks {
-  done: Int
-  undone: Int
-}
-
 type User {
   id: ID
   nickname: String
   mathscore: Int
   email: String
-  homeworks: UserHomeworks
+  avatar: String
 }
 
 type Query {
