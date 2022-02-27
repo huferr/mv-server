@@ -2,9 +2,9 @@
    "type": "postgres",
    "host": "localhost",
    "port": 5432,
-   "username": "test",
-   "password": "test",
-   "database": "test",
+   "username": "hugoferreira",
+   "password": "1234",
+   "database": "mv-server",
    "synchronize": true,
    "logging": false,
    "entities": [
