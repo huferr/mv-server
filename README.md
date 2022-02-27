@@ -1,8 +1,7 @@
-# math_viewer_server
-The Math viewer Server
+# Awesome Project Build with TypeORM
 
-Made with: 
+Steps to run this project:
 
-- NodeJS;
-- Apollo Server;
-- GraphQL.
+1. Run `npm i` command
+2. Setup database settings inside `ormconfig.json` file
+3. Run `npm start` command

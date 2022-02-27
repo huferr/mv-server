@@ -1,22 +1,20 @@
 {
-  "name": "mv-server",
-  "version": "1.0.0",
-  "description": "",
-  "main": "src/server.js",
-  "scripts": {
-    "start": "nodemon src/server.js"
-  },
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "@graphql-tools/load-files": "^6.5.3",
-    "@graphql-tools/merge": "^8.2.1",
-    "apollo-server": "^3.6.2",
-    "express": "^4.17.2",
-    "express-graphql": "^0.12.0",
-    "graphql": "^15.8.0"
-  },
-  "devDependencies": {
-    "nodemon": "^2.0.15"
-  }
+   "name": "mv-server",
+   "version": "0.0.1",
+   "description": "Awesome project developed with TypeORM.",
+   "type": "commonjs",
+   "devDependencies": {
+      "ts-node": "10.4.0",
+      "@types/node": "^16.11.10",
+      "typescript": "4.5.2"
+   },
+   "dependencies": {
+      "typeorm": "0.2.44",
+      "reflect-metadata": "^0.1.13",
+      "pg": "^8.4.0"
+   },
+   "scripts": {
+      "start": "ts-node src/index.ts",
+      "typeorm": "node --require ts-node/register ./node_modules/typeorm/cli.js"
+   }
 }
