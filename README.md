@@ -1,7 +1,9 @@
-# Awesome Project Build with TypeORM
+<h1 align=center>Math Viewer Server</h1>
 
-Steps to run this project:
+Made with:
 
-1. Run `npm i` command
-2. Setup database settings inside `ormconfig.json` file
-3. Run `npm start` command
+- NodeJS;
+- Express;
+- GraphQL;
+- TypeORM;
+- PostgresSQL;
