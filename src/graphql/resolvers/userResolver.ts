@@ -14,7 +14,7 @@ export class UserResolver {
 
   @Mutation(() => Boolean)
   async register(
-        @Arg('userRegisterInput') userRegisterInput: UserRegisterInput
+    @Arg('UserRegisterInput') userRegisterInput: UserRegisterInput
   ) {
     const hashedPassword = await hash(userRegisterInput.password, 12);
 
@@ -34,8 +34,8 @@ export class UserResolver {
 
   @Mutation(() => UserAuthResponse)
   async login(
-        @Arg('userLoginInput') userloginInput: UserLoginInput, 
-        @Ctx() { res }: Context
+    @Arg('UserLoginInput') userloginInput: UserLoginInput, 
+    @Ctx() { res }: Context
   ): Promise<UserAuthResponse> {
     const user = await User.findOne({ where: { email: userloginInput.email }})
 
