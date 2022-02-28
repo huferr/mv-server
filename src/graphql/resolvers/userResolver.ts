@@ -7,54 +7,52 @@ import { UserAuthResponse, UserLoginInput, UserRegisterInput } from "../schemas/
 
 @Resolver()
 export class UserResolver {
-    @Query(() => [User])
-    users() {
-        return User.find();
-    }
+  @Query(() => [User])
+  users() {
+    return User.find();
+  }
 
-    @Mutation(() => Boolean)
-    async register(
+  @Mutation(() => Boolean)
+  async register(
         @Arg('userRegisterInput') userRegisterInput: UserRegisterInput
-    ) {
-        const hashedPassword = await hash(userRegisterInput.password, 12);
+  ) {
+    const hashedPassword = await hash(userRegisterInput.password, 12);
 
-        try {
-          await User.insert({
-            name: userRegisterInput.name,
-            email: userRegisterInput.email,
-            password: hashedPassword,
-          })
-        } catch (error) {
-          console.log(error)
-          return false
-        }
-
-        return true;
-       
+    try {
+      await User.insert({
+        name: userRegisterInput.name,
+        email: userRegisterInput.email,
+        password: hashedPassword,
+      })
+    } catch (error) {
+      console.log(error)
+      return false
     }
 
-    @Mutation(() => UserAuthResponse)
-    async login(
+    return true;
+  }
+
+  @Mutation(() => UserAuthResponse)
+  async login(
         @Arg('userLoginInput') userloginInput: UserLoginInput, 
         @Ctx() { res }: Context
-    ): Promise<UserAuthResponse> {
-        const user = await User.findOne({ where: { email: userloginInput.email }})
+  ): Promise<UserAuthResponse> {
+    const user = await User.findOne({ where: { email: userloginInput.email }})
 
-        if (!user) throw new Error("could not find user");
+    if (!user) throw new Error("could not find user");
 
-        const validatePassword = await compare(userloginInput.password, user.password);
+    const validatePassword = await compare(userloginInput.password, user.password);
 
-        if (!validatePassword) throw new Error("wrong password");
+    if (!validatePassword) throw new Error("wrong password");
 
-        // login successful
+    // login successful
 
-        res.cookie('jid', createRefreshToken(user), {
-            httpOnly: true
-        })
+    res.cookie('jid', createRefreshToken(user), {
+      httpOnly: true
+    })
 
-        return {
-            accessToken: createAccessToken(user)
-        };
-       
-    }
+    return {
+      accessToken: createAccessToken(user)
+    };
+  }
 }

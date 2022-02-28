@@ -3,13 +3,13 @@ import { Field, InputType, ObjectType } from "type-graphql";
 @InputType()
 export class UserRegisterInput {
     @Field()
-    name: string
+      name: string
 
     @Field()
-    email: string;
+      email: string;
 
     @Field()
-    password: string;
+      password: string;
 }
 
 
@@ -18,14 +18,14 @@ export class UserRegisterInput {
 export class UserLoginInput {
 
     @Field()
-    email: string;
+      email: string;
 
     @Field()
-    password: string;
+      password: string;
 }
 
 @ObjectType()
 export class UserAuthResponse {
     @Field()
-    accessToken: string
+      accessToken: string
 }

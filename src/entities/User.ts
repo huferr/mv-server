@@ -5,16 +5,16 @@ import {Entity, PrimaryGeneratedColumn, Column, BaseEntity} from "typeorm";
 export class User extends BaseEntity {
     @Field(() => Int)
     @PrimaryGeneratedColumn()
-    id: number;
+      id: number;
     
     @Field()
     @Column('text')
-    email: string;
+      email: string;
 
     @Column('text')
-    password: string;
+      password: string;
 
     @Field()
     @Column('text')
-    name: string;
+      name: string;
 }
