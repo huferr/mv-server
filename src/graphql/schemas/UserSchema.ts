@@ -12,8 +12,6 @@ export class UserRegisterInput {
       password: string;
 }
 
-
-
 @InputType()
 export class UserLoginInput {
 

@@ -1,10 +1,11 @@
-import { Resolver, Query, Mutation, Arg, Ctx, UseMiddleware } from "type-graphql";
+import { Resolver, Query, Mutation, Arg, Ctx, UseMiddleware, Int } from "type-graphql";
 import { User } from "../../entities/User";
 import { compare, hash } from 'bcryptjs'
 import { Context } from "../../typing";
 import { createAccessToken, createRefreshToken } from "../../auth";
 import { UserAuthResponse, UserLoginInput, UserRegisterInput } from "../schemas/userSchema";
 import { isAuth } from "../../middlewares/isAuth";
+import { getConnection } from "typeorm";
 
 @Resolver()
 export class UserResolver {
@@ -64,5 +65,14 @@ export class UserResolver {
     return {
       accessToken: createAccessToken(user)
     };
+  }
+
+  @Mutation(() => Boolean)
+  async revokeRefreshTokensForUser(
+    @Arg('userId', () => Int) userId: number
+  ) {
+    await getConnection().getRepository(User).increment({id: userId}, "tokenVersion", 1)
+
+    return true
   }
 }
