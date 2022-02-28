@@ -1,15 +1,25 @@
-import { Resolver, Query, Mutation, Arg, Ctx } from "type-graphql";
+import { Resolver, Query, Mutation, Arg, Ctx, UseMiddleware } from "type-graphql";
 import { User } from "../../entities/User";
 import { compare, hash } from 'bcryptjs'
-import { Context } from "../../context";
+import { Context } from "../../typing";
 import { createAccessToken, createRefreshToken } from "../../auth";
 import { UserAuthResponse, UserLoginInput, UserRegisterInput } from "../schemas/userSchema";
+import { isAuth } from "../../middlewares/isAuth";
 
 @Resolver()
 export class UserResolver {
   @Query(() => [User])
   users() {
     return User.find();
+  }
+
+  // query accessible only if user is authenticated 
+  @Query(() => String)
+  @UseMiddleware(isAuth)
+  bye(
+    @Ctx() {payload}: Context
+  ) {
+    return `your user id is: ${payload?.userId}`;
   }
 
   @Mutation(() => Boolean)
