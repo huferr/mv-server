@@ -6,4 +6,4 @@ Made with:
 - Express;
 - GraphQL;
 - TypeORM;
-- PostgresSQL;
+- PostgreSQL;
