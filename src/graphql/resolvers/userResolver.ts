@@ -50,11 +50,11 @@ export class UserResolver {
   ): Promise<UserAuthResponse> {
     const user = await User.findOne({ where: { email: userloginInput.email }})
 
-    if (!user) throw new Error("could not find user");
+    if (!user) throw new Error("WRONG_EMAIL");
 
     const validatePassword = await compare(userloginInput.password, user.password);
 
-    if (!validatePassword) throw new Error("wrong password");
+    if (!validatePassword) throw new Error("WRONG_PASSWORD");
 
     // login successful
 
