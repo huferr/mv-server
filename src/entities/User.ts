@@ -11,9 +11,11 @@ export class User extends BaseEntity {
     @Column('text')
       email: string;
 
+    @Field()
     @Column('text')
       password: string;
-
+      
+    @Field()
     @Column('text')
       name: string;
 

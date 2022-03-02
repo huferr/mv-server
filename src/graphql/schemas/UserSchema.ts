@@ -27,3 +27,12 @@ export class UserAuthResponse {
     @Field()
       accessToken: string
 }
+
+@ObjectType()
+export class UserData {
+    @Field()
+      name: string;
+
+    @Field()
+      email: string;
+}

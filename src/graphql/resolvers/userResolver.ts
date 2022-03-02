@@ -3,7 +3,7 @@ import { User } from "../../entities/User";
 import { compare, hash } from 'bcryptjs'
 import { Context } from "../../typing";
 import { createAccessToken, createRefreshToken } from "../../auth";
-import { UserAuthResponse, UserLoginInput, UserRegisterInput } from "../schemas/userSchema";
+import { UserAuthResponse, UserData, UserLoginInput, UserRegisterInput } from "../schemas/userSchema";
 import { isAuth } from "../../middlewares/isAuth";
 import { getConnection } from "typeorm";
 
@@ -74,5 +74,13 @@ export class UserResolver {
     await getConnection().getRepository(User).increment({id: userId}, "tokenVersion", 1)
 
     return true
+  }
+
+  @Query(() => UserData)
+  @UseMiddleware(isAuth)
+  user(
+    @Ctx() { payload }: Context
+  ) {
+    return User.findOne({ where: { id: payload?.userId }})
   }
 }
