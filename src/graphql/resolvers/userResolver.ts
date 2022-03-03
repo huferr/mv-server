@@ -23,11 +23,17 @@ export class UserResolver {
     return `your user id is: ${payload?.userId}`;
   }
 
-  @Mutation(() => Boolean)
+  @Mutation(() => UserAuthResponse)
   async register(
     @Arg('UserRegisterInput') userRegisterInput: UserRegisterInput
   ) {
     const hashedPassword = await hash(userRegisterInput.password, 12);
+    const emailAlreadyExists = await User.findOne({ where: { email: userRegisterInput.email }});
+    const nameAlreadyExists = await User.findOne({ where: { name: userRegisterInput.name }});
+
+    if (emailAlreadyExists) throw new Error('EMAIL_ALREADY_EXISTS');
+
+    if (nameAlreadyExists) throw new Error('NAME_ALREADY_EXISTS');
 
     try {
       await User.insert({
@@ -36,11 +42,16 @@ export class UserResolver {
         password: hashedPassword,
       })
     } catch (error) {
-      console.log(error)
       return false
     }
 
-    return true;
+    const user = await User.findOne({ where: { email: userRegisterInput.email }})
+
+    if (!user) throw new Error("UNKNOWN_ERROR");
+
+    return {
+      accessToken: createAccessToken(user)
+    };
   }
 
   @Mutation(() => UserAuthResponse)
