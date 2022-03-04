@@ -27,9 +27,24 @@ export class UserResolver {
   async register(
     @Arg('UserRegisterInput') userRegisterInput: UserRegisterInput
   ) {
-    const hashedPassword = await hash(userRegisterInput.password, 12);
-    const emailAlreadyExists = await User.findOne({ where: { email: userRegisterInput.email }});
-    const nameAlreadyExists = await User.findOne({ where: { name: userRegisterInput.name }});
+    const userName = userRegisterInput.name;
+    const userEmail = userRegisterInput.email;
+    const userPassword = userRegisterInput.password;
+    const emailRegEx = /@[a-zA-Z]+\.+[a-z-A-Z]+/;
+
+    if(!userName || userName === "" ) throw new Error("NAME_CANNOT_BE_EMPTY");
+    if(userName.length < 4) throw new Error("NAME_TOO_SHORT");
+
+
+    if(!userEmail|| userEmail === "" ) throw new Error("EMAIL_CANNOT_BE_EMPTY");
+    if(!emailRegEx.test(userEmail)) throw new Error("INVALID_EMAIL");
+
+    if(!userPassword || userPassword === "" ) throw new Error("PASSWORD_CANNOT_BE_EMPTY");
+    if(userPassword.length < 6) throw new Error("PASSWORD_TOO_SHORT");
+
+    const hashedPassword = await hash(userPassword, 12);
+    const emailAlreadyExists = await User.findOne({ where: { email: userEmail }});
+    const nameAlreadyExists = await User.findOne({ where: { name: userName }});
 
     if (emailAlreadyExists) throw new Error('EMAIL_ALREADY_EXISTS');
 
@@ -37,15 +52,15 @@ export class UserResolver {
 
     try {
       await User.insert({
-        name: userRegisterInput.name,
-        email: userRegisterInput.email,
+        name: userName,
+        email: userEmail,
         password: hashedPassword,
       })
     } catch (error) {
       return false
     }
 
-    const user = await User.findOne({ where: { email: userRegisterInput.email }})
+    const user = await User.findOne({ where: { email: userEmail }})
 
     if (!user) throw new Error("UNKNOWN_ERROR");
 
