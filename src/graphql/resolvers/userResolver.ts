@@ -3,7 +3,7 @@ import { User } from "../../entities/User";
 import { compare, hash } from 'bcryptjs'
 import { Context } from "../../typing";
 import { createAccessToken, createRefreshToken } from "../../auth";
-import { UserAuthResponse, UserData, UserLoginInput, UserRegisterInput } from "../schemas/userSchema";
+import { UserAuthResponse, UserData, UserImageUploadInput, UserLoginInput, UserRegisterInput } from "../schemas/userSchema";
 import { isAuth } from "../../middlewares/isAuth";
 import { getConnection } from "typeorm";
 
@@ -99,15 +99,15 @@ export class UserResolver {
   @Mutation(() => Boolean)
   @UseMiddleware(isAuth)
   async uploadUserImage(
-    @Arg('imageUri', () => String) imageUri: string,
+    @Arg('imageUri', () => String) userImageUploadInput: UserImageUploadInput,
     @Ctx() { payload }: Context
   ) {
-    if(imageUri === null) throw new Error("INVALID_URI");
+    if(userImageUploadInput.imageUri === null) throw new Error("INVALID_URI");
 
     try {
       await getConnection()
         .createQueryBuilder()
-        .update(User).set({ imageUri }).where({ id: payload?.userId })
+        .update(User).set({ imageUri: userImageUploadInput.imageUri }).where({ id: payload?.userId })
         .execute();
     } catch (error) {
       throw new Error(error);

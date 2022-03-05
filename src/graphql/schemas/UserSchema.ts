@@ -44,7 +44,7 @@ export class UserData {
 export class UserImageUploadInput {
 
   @Field()
-    avatarUri: string;
+    imageUri: string;
 
 }
 
