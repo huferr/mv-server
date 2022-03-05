@@ -9,11 +9,6 @@ import { getConnection } from "typeorm";
 
 @Resolver()
 export class UserResolver {
-  @Query(() => [User])
-  users() {
-    return User.find();
-  }
-
   // query accessible only if user is authenticated 
   @Query(() => String)
   @UseMiddleware(isAuth)
