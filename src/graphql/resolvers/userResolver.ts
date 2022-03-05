@@ -3,7 +3,7 @@ import { User } from "../../entities/User";
 import { compare, hash } from 'bcryptjs'
 import { Context } from "../../typing";
 import { createAccessToken, createRefreshToken } from "../../auth";
-import { UserAuthResponse, UserData, UserImageUploadInput, UserLoginInput, UserRegisterInput } from "../schemas/userSchema";
+import { UserAuthResponse, UserData, UserLoginInput, UserRegisterInput } from "../schemas/userSchema";
 import { isAuth } from "../../middlewares/isAuth";
 import { getConnection } from "typeorm";
 
