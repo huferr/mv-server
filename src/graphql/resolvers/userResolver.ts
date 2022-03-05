@@ -99,15 +99,15 @@ export class UserResolver {
   @Mutation(() => Boolean)
   @UseMiddleware(isAuth)
   async uploadUserImage(
-    @Arg('userImageUploadInput', () => String) userImageUploadInput: UserImageUploadInput,
+    @Arg('userImageUploadInput', () => String) imageUri: string,
     @Ctx() { payload }: Context
   ) {
-    if(userImageUploadInput.imageUri === null) throw new Error("INVALID_URI");
+    if(imageUri === null) throw new Error("INVALID_URI");
 
     try {
       await getConnection()
         .createQueryBuilder()
-        .update(User).set({ imageUri: userImageUploadInput.imageUri }).where({ id: payload?.userId })
+        .update(User).set({ imageUri }).where({ id: payload?.userId })
         .execute();
     } catch (error) {
       throw new Error(error);
