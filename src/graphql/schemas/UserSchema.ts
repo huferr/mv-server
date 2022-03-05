@@ -35,4 +35,22 @@ export class UserData {
 
   @Field()
     email: string;
+
+  @Field()
+    avatarUri: string;
+}
+
+@ObjectType()
+export class UserImageUploadInput {
+
+  @Field()
+    avatarUri: string;
+
+}
+
+@ObjectType()
+export class UserImageUploadResponse {
+
+  @Field()
+    status: boolean;
 }

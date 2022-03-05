@@ -9,15 +9,6 @@ import { getConnection } from "typeorm";
 
 @Resolver()
 export class UserResolver {
-  // query accessible only if user is authenticated 
-  @Query(() => String)
-  @UseMiddleware(isAuth)
-  bye(
-    @Ctx() { payload }: Context
-  ) {
-    return `your user id is: ${payload?.userId}`;
-  }
-
   @Mutation(() => UserAuthResponse)
   async register(
     @Arg('UserRegisterInput') userRegisterInput: UserRegisterInput
@@ -103,5 +94,25 @@ export class UserResolver {
     @Ctx() { payload }: Context
   ) {
     return User.findOne({ where: { id: payload?.userId }})
+  }
+
+  @Mutation(() => Boolean)
+  @UseMiddleware(isAuth)
+  async uploadUserImage(
+    @Arg('imageUri', () => String) imageUri: string,
+    @Ctx() { payload }: Context
+  ) {
+    if(imageUri === null) throw new Error("INVALID_URI");
+
+    try {
+      await getConnection()
+        .createQueryBuilder()
+        .update(User).set({ imageUri }).where({ id: payload?.userId })
+        .execute();
+    } catch (error) {
+      throw new Error(error);
+    }
+
+    return true
   }
 }
