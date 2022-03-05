@@ -99,7 +99,7 @@ export class UserResolver {
   @Mutation(() => Boolean)
   @UseMiddleware(isAuth)
   async uploadUserImage(
-    @Arg('imageUri', () => String) userImageUploadInput: UserImageUploadInput,
+    @Arg('userImageUploadInput', () => String) userImageUploadInput: UserImageUploadInput,
     @Ctx() { payload }: Context
   ) {
     if(userImageUploadInput.imageUri === null) throw new Error("INVALID_URI");
