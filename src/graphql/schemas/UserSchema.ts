@@ -37,7 +37,7 @@ export class UserData {
     email: string;
 
   @Field()
-    avatarUri: string;
+    imageUri: string;
 }
 
 @ObjectType()
