@@ -1,8 +1,8 @@
 import { Resolver, Query, Mutation, Arg, Ctx, UseMiddleware, Int } from "type-graphql";
 import { User } from "../../entities/User";
 import { compare, hash } from 'bcryptjs'
-import { Context } from "../../typing";
-import { createAccessToken, createRefreshToken } from "../../auth";
+import { ContextType } from "../../typing";
+import { createAccessToken, createRefreshToken } from "../../utils/auth";
 import { UserAuthResponse, UserData, UserLoginInput, UserRegisterInput } from "../schemas/userSchema";
 import { isAuth } from "../../middlewares/isAuth";
 import { getConnection } from "typeorm";
@@ -58,7 +58,7 @@ export class UserResolver {
   @Mutation(() => UserAuthResponse)
   async login(
     @Arg('UserLoginInput') userloginInput: UserLoginInput, 
-    @Ctx() { res }: Context
+    @Ctx() { res }: ContextType
   ): Promise<UserAuthResponse> {
     const user = await User.findOne({ where: { email: userloginInput.email }})
 
@@ -91,7 +91,7 @@ export class UserResolver {
   @Query(() => UserData)
   @UseMiddleware(isAuth)
   user(
-    @Ctx() { payload }: Context
+    @Ctx() { payload }: ContextType
   ) {
     return User.findOne({ where: { id: payload?.userId }})
   }
@@ -100,7 +100,7 @@ export class UserResolver {
   @UseMiddleware(isAuth)
   async uploadUserImage(
     @Arg('imageUri', () => String) imageUri: string,
-    @Ctx() { payload }: Context
+    @Ctx() { payload }: ContextType
   ) {
     if(imageUri === null) throw new Error("INVALID_URI");
 

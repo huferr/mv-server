@@ -8,7 +8,7 @@ import { createConnection } from "typeorm";
 import cookieParser from 'cookie-parser';
 import { verify } from 'jsonwebtoken';
 import { User } from './entities/User';
-import { createAccessToken, createRefreshToken } from './auth';
+import { createAccessToken, createRefreshToken } from './utils/auth';
 
 (async () => {
   const app = express();
