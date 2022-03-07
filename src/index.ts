@@ -9,10 +9,22 @@ import cookieParser from 'cookie-parser';
 import { verify } from 'jsonwebtoken';
 import { User } from './entities/User';
 import { createAccessToken, createRefreshToken } from './utils/auth';
+import bodyParser from 'body-parser';
 
 (async () => {
   const app = express();
   app.use(cookieParser())
+
+  app.use(bodyParser.json({
+    limit: '50mb'
+  }));
+  
+  app.use(bodyParser.urlencoded({
+    limit: '50mb',
+    parameterLimit: 100000,
+    extended: true 
+  }));
+  
   app.get("/", (_req, res) => res.send("hello"));
 
   app.post("/refresh_token", async (req, res) => {
