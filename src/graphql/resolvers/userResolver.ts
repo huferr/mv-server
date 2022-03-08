@@ -41,6 +41,7 @@ export class UserResolver {
         name: userName,
         email: userEmail,
         password: hashedPassword,
+        imageUri: "empty",
       })
     } catch (error) {
       return false
