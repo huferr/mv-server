@@ -143,4 +143,32 @@ export class UserResolver {
 
     return true
   }
+
+  @Mutation(() => Boolean)
+  @UseMiddleware(isAuth)
+  async updateEmail(
+    @Arg('email', () => String) email: string,
+    @Ctx() { payload }: ContextType
+  ) {
+    const emailRegEx = /@[a-zA-Z]+\.+[a-z-A-Z]+/;
+
+    if(email === "") throw new Error("EMAIL_CANNOT_BE_EMPTY");
+
+    if(!emailRegEx.test(email)) throw new Error("INVALID_EMAIL");
+
+    const emailAlreadyExists = await User.findOne({ where: { email } })
+
+    if(emailAlreadyExists) throw new Error("EMAIL_ALREADY_EXISTS")
+
+    try {
+      await getConnection()
+        .createQueryBuilder()
+        .update(User).set({ email }).where({ id: payload?.userId })
+        .execute();
+    } catch (error) {
+      throw new Error(error);
+    }
+
+    return true
+  }
 }
