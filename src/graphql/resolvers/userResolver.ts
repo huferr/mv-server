@@ -116,4 +116,31 @@ export class UserResolver {
 
     return true
   }
+
+  @Mutation(() => Boolean)
+  @UseMiddleware(isAuth)
+  async updateNickname(
+    @Arg('nickname', () => String) nickname: string,
+    @Ctx() { payload }: ContextType
+  ) {
+
+    if(nickname === "") throw new Error("NICKNAME_CANNOT_BE_EMPTY");
+    if(nickname.length > 12) throw new Error("NICKNAME_TOO_LARGE");
+    if(nickname.length < 4) throw new Error("NICKNAME_TOO_SHORT");
+
+    const nicknameAlreadyExists = await User.findOne({ where: { name: nickname } })
+
+    if(nicknameAlreadyExists) throw new Error("NAME_ALREADY_EXISTS")
+
+    try {
+      await getConnection()
+        .createQueryBuilder()
+        .update(User).set({ name: nickname }).where({ id: payload?.userId })
+        .execute();
+    } catch (error) {
+      throw new Error(error);
+    }
+
+    return true
+  }
 }
