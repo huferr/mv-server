@@ -171,4 +171,22 @@ export class UserResolver {
 
     return true
   }
+
+  @Mutation(() => Boolean)
+  @UseMiddleware(isAuth)
+  async addMathscore(
+    @Arg('amount', () => Int) amount: number,
+    @Ctx() { payload }: ContextType
+  ) {
+    
+    try {
+      await getConnection()
+        .getRepository(User)
+        .increment({id: Number(payload?.userId)}, "mathscore", amount)
+    } catch (error) {
+      throw new Error(error);
+    }
+
+    return true
+  }
 }
