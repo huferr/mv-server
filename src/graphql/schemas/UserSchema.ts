@@ -38,6 +38,9 @@ export class UserData {
 
   @Field()
     imageUri: string;
+  
+  @Field()
+    mathscore: number;
 }
 
 @ObjectType()
