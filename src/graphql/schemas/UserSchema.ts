@@ -44,6 +44,15 @@ export class UserData {
 }
 
 @ObjectType()
+export class MathscoreRank {
+  @Field()
+    name: string;
+
+  @Field()
+    mathscore: number;
+}
+
+@ObjectType()
 export class UserImageUploadInput {
 
   @Field()

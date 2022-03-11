@@ -3,7 +3,7 @@ import { User } from "../../entities/User";
 import { compare, hash } from 'bcryptjs'
 import { ContextType } from "../../typing";
 import { createAccessToken, createRefreshToken } from "../../utils/auth";
-import { UserAuthResponse, UserData, UserLoginInput, UserRegisterInput } from "../schemas/userSchema";
+import { MathscoreRank, UserAuthResponse, UserData, UserLoginInput, UserRegisterInput } from "../schemas/userSchema";
 import { isAuth } from "../../middlewares/isAuth";
 import { getConnection } from "typeorm";
 
@@ -94,7 +94,20 @@ export class UserResolver {
   user(
     @Ctx() { payload }: ContextType
   ) {
+
     return User.findOne({ where: { id: payload?.userId }})
+  }
+
+  @Query(() => [MathscoreRank])
+  @UseMiddleware(isAuth)
+  async mathscoreRank(
+    @Ctx() { payload }: ContextType
+  ) {
+    if(!payload) throw new Error("NOT_AUTH");
+
+    const users = await User.find({ order:{ mathscore: "DESC" }, select: ["mathscore", "name"]})
+
+    return users;
   }
 
   @Mutation(() => Boolean)
