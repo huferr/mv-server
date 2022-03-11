@@ -105,7 +105,12 @@ export class UserResolver {
   ) {
     if(!payload) throw new Error("NOT_AUTH");
 
-    const users = await User.find({ order:{ mathscore: "DESC" }, select: ["mathscore", "name"]})
+    const users = (await User.find({ order:{ mathscore: "DESC" }, select: ["mathscore", "name"]}))
+      .map((user, index) => ({
+        name: user.name,
+        position: 1 + index,
+        mathscore: user.mathscore,
+      }))
 
     return users;
   }

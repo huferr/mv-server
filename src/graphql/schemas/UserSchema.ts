@@ -49,6 +49,9 @@ export class MathscoreRank {
     name: string;
 
   @Field()
+    position: number;
+
+  @Field()
     mathscore: number;
 }
 
