@@ -7,3 +7,6 @@ Made with:
 - GraphQL;
 - TypeORM;
 - PostgreSQL;
+
+
+> Check the Math Viewer repo: [Math Viewer](https://github.com/huferr/math-viewer)
